@@ -1,0 +1,259 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700&display=swap");
+/* - Family: [Nunito Sans](https://fonts.google.com/specimen/Nunito+Sans) */
+
+:root{  
+    --Mode-Text: hsl(200, 15%, 8%);
+    --Background: hsl(0, 0%, 100%);
+    --Mode-Input: hsl(0, 0%, 98%);
+    
+}
+
+.reset{
+    --Background: hsl(209, 23%, 22%);
+    --Mode-Text: hsl(0, 0%, 100%);
+    --Mode-Input: hsl(207, 26%, 17%);
+}
+
+.small-img-invert{
+    filter: invert(100%);
+}
+
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 14px;
+}
+
+body{
+    color: var(--Mode-Text);
+    font-family: "Nunito Sans", "Space Grotesk", Arial, Helvetica, sans-serif;
+    background-color: var(--Mode-Input);
+}
+
+img{
+    max-width: 100%;
+}
+
+.small-img{
+    width: 20px;
+}
+
+.container{
+    width: 90%;
+    margin: 0 auto;
+    /* border: 2px solid red; */
+}
+
+header{
+    font-size: 1rem;
+    padding: 2em 0em;
+    background-color: var(--Background);
+    box-shadow: 0px 0px 4px 0px gray;
+}
+
+h1{
+    font-size: 1.35rem;
+}
+
+.page-head{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mode{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center
+}
+
+.mode img{
+    margin-right: .5em;
+    cursor: pointer;
+}
+
+.search, 
+.filter-by-region, 
+.regions,
+.country { 
+    border-radius: 5px;
+    box-shadow: 0px 0px 4px 0px gray;
+}
+
+input::placeholder{
+    color: var(--Mode-Text);
+    font-size: 1rem;
+}
+
+.search,
+input,
+.regions,
+.filter-by-region, 
+.country-details{
+padding: 1em 2em;
+color: var(--Mode-Text);
+}
+
+input{
+    min-width: 95%;
+    margin: 0 auto;
+    border: 2.7px solid transparent;
+    outline: none;
+    background-color: transparent;
+}
+
+.search-and-filter{
+    margin-top: 2em;
+}
+
+.search{
+    display: flex;
+    align-items: center;
+    padding: 0px .5em 0px 1em;
+    justify-content: space-between;
+    background-color: var(--Background);
+}
+
+.filter{
+    margin-top: 1em;
+    position: relative;
+}
+
+.filter-by-region, 
+.regions {
+    background-color: var(--Background);
+    width: 200px;
+    z-index: 120;
+}
+
+.filter-by-region{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.regions{
+    position: absolute;
+    margin-top: .5em;
+}
+
+.regions p{
+    cursor: pointer;
+    padding: .5em 0px;
+}
+
+.hidden{
+    display: none;
+}
+
+    /* Grid done with help from StackOverFlow.
+    Using flex with space-between messes up the
+    last child(ren) of the container. So, I had to find
+    an alternative. Find this on Stackoverflow and voila,
+    it worked!!!*/
+
+.countries-section{
+    margin-top: 3em;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 250px);
+    grid-gap: 2em;
+    justify-content: space-evenly;
+    align-content: center;
+}
+
+.country{
+    display: inline;
+    width: 100%;
+    min-height:300px;
+    margin-bottom: 2.5em;
+    cursor: pointer;
+    transition: .5s;
+    background-color: var(--Background);
+}
+
+.country:hover{
+    animation: bounce .1s linear both;
+}
+
+
+@keyframes bounce {
+    from{
+        transform: scale(0.9);
+    }
+    to{
+        transform: scale(1.05);
+    }
+    
+}
+
+.country-flag{
+    width: 100%;
+    max-height: 150px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.country-name{
+    font-size: 1.5rem;
+}
+
+.country-details p{
+    margin-bottom: .5em;
+}
+
+.country-details p span{
+    font-weight: 700;
+}
+
+.error-section{
+    /* border: 2px solid red; */
+    margin-top: 1em;
+}
+
+.error-container{
+    max-width: 90%;
+    word-wrap: break-word;
+}
+
+.error-msg{
+    font-size: 1rem;
+    font-weight: 700px;
+}
+
+.error-msg span{
+    border-bottom: 2px solid red;
+    margin-right: .25em;
+    font-size: 1.5rem;
+}
+
+@media (min-width: 587px) {
+    .countries-section{
+        justify-content: space-between;
+        align-content: center;
+    }    
+    .search{
+        width: 400px;
+    }
+}
+
+/* Media Queries */
+@media (min-width: 768px) {
+    .search-and-filter{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .filter{
+        margin: 0;
+    }
+
+}
