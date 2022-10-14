@@ -10,6 +10,45 @@ const modeSwitchName = document.querySelector(".change-to-mode")
 const body = document.getElementById("body")
 const errorSection = document.querySelector(".error-container")
 const smallImg = document.getElementsByClassName("small-img")
+const spinner = document.querySelector(".spinner")
+const loader = document.querySelector('.loader')
+let getFromSaved = JSON.parse(localStorage.getItem("CountriesData"))
+body.style.pointerEvents = "none"
+
+const mapFrom = data => {
+    data.map(country => {
+        let content = `<div class="country" onclick="clickFunc(this)">
+        <img src=${country.flags.svg} alt="" class="country-flag" />
+        <div class="country-details">
+          <p class="country-name"><span>${country.name.common}</span></p>
+          <p class="country-population"><span>Population: </span>${country.population}</p>
+          <p class="country-region"><span>Region: </span>${country.region}</p>
+          <p class="country-capital"><span>Capital: </span>${country.capital}</p>
+        </div>
+      </div>`
+      body.style.pointerEvents = "all"
+        spinner.classList.add("hidden")
+        countriesSection.innerHTML += content;
+    })
+}
+
+if(getFromSaved) mapFrom(getFromSaved)
+else fetchCountries()
+
+function fetchCountries(){  
+    fetch("https://restcountries.com/v3.1/all")
+    .then(res => res.json())
+    .then(data => {
+        localStorage.setItem("CountriesData", JSON.stringify(data))
+        mapFrom(data)
+        getFromSaved = JSON.parse(localStorage.getItem("CountriesData"))
+    }).catch(error => {
+        console.log(error)
+        spinner.classList.add("hidden")
+        countriesSection.style.gridTemplateColumns = "100%"
+        countriesSection.innerHTML = `${error}. Please refresh page`;
+    })
+}
 
 for (let i = 0; i < allRegion.length; i++) {
     allRegion[i].addEventListener('click', () => {
@@ -21,8 +60,30 @@ for (let i = 0; i < allRegion.length; i++) {
     })
 }
 
+let modeChecker = localStorage.getItem("mode")
+if(modeChecker == "night"){  
+    modeSwitch.src = ".//images//night-mode.png"
+    modeSwitchName.textContent = "Dark"
+    body.classList.add("reset")
+    loader.classList.add("small-img-invert")
+    for (let i = 0; i < smallImg.length; i++){
+        smallImg[i].classList.add("small-img-invert")
+    }
+    
+}
+else{
+    modeSwitch.src=".//images//light-mode.png"
+    modeSwitchName.textContent = "Light"
+    body.classList.remove("reset")
+    loader.classList.remove("small-img-invert")
+    for (let i = 0; i < smallImg.length; i++){
+        smallImg[i].classList.remove("small-img-invert")
+    }
+}
+
 modeSwitch.addEventListener('click', () => {
     if(modeSwitch.src.includes("night")) {
+        localStorage.setItem("mode", "light")
         modeSwitch.src=".//images//light-mode.png"
         modeSwitchName.textContent = "Light"
         body.classList.remove("reset")
@@ -31,6 +92,7 @@ modeSwitch.addEventListener('click', () => {
         }
     }
     else {
+        localStorage.setItem("mode", "night")
         modeSwitch.src = ".//images//night-mode.png"
         modeSwitchName.textContent = "Dark"
         body.classList.add("reset")
@@ -77,35 +139,3 @@ const toggleHidden = () => {
 filterByRegion.addEventListener("click", () => {
     toggleHidden()
 })
-
-const mapFrom = data => {
-    data.map(country => {
-        let content = `<div class="country" onclick="clickFunc(this)">
-        <img src=${country.flags.svg} alt="" class="country-flag" />
-        <div class="country-details">
-          <p class="country-name"><span>${country.name.common}</span></p>
-          <p class="country-population"><span>Population: </span>${country.population}</p>
-          <p class="country-region"><span>Region: </span>${country.region}</p>
-          <p class="country-capital"><span>Capital: </span>${country.capital}</p>
-        </div>
-      </div>`
-    
-      countriesSection.innerHTML += content;
-    })
-}
-
-const fetchCountries = () => {  
-    fetch("https://restcountries.com/v3.1/all")
-    .then(res => res.json())
-    .then(data => { 
-        localStorage.setItem("CountriesData", JSON.stringify(data))
-        mapFrom(data)
-    }).catch(error => {
-        console.log(error)
-    })
-}
-
-let getFromSaved = JSON.parse(localStorage.getItem("CountriesData"))
-
-if(getFromSaved) mapFrom(getFromSaved)
-else fetchCountries()

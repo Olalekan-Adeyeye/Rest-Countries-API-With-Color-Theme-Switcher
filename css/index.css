@@ -29,6 +29,7 @@ html{
 }
 
 body{
+    pointer-events: all;
     color: var(--Mode-Text);
     font-family: "Nunito Sans", "Space Grotesk", Arial, Helvetica, sans-serif;
     background-color: var(--Mode-Input);
@@ -46,6 +47,41 @@ img{
     width: 90%;
     margin: 0 auto;
     /* border: 2px solid red; */
+}
+
+.spinner{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    z-index: 150;
+    background-color: hsla(0, 0%, 98%, 0.5);
+}
+
+.spinner img{
+    animation: rotate .5s linear infinite forwards;
+    width: 50px;
+    margin: 0 auto;
+    pointer-events: none;
+    user-select: none;
+}
+
+.spinner p{
+    text-transform: uppercase;
+    margin-top: .75em;
+}
+
+@keyframes rotate {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
 }
 
 header{
@@ -74,7 +110,7 @@ h1{
 }
 
 .mode img{
-    margin-right: .5em;
+    margin-right: .35em;
     cursor: pointer;
 }
 
